@@ -20,6 +20,63 @@ The OpenWRT image will not be modified, nor will OpenWRT be set up. Once AutoWRT
 
 If enabled in `config.py`, AutoWRT will collect some information from the stock firmware as well as backups of all mtd sections to the log directory. You may want to delete those at some point.
 
+<details open="open">
+  <summary>Example output</summary>
+  
+```
+2021-03-14 20:47:21,005 - AutoWRT - INFO - Logging to /home/me/autowrt/log/2021-03-14T20:47:21.003883
+2021-03-14 20:47:21,006 - AutoWRT - INFO - Data dir is /home/me/autowrt/images
+2021-03-14 20:47:21,009 - AutoWRT - INFO - Xiaomi-Module started, loading Selenium driver
+2021-03-14 20:47:25,392 - AutoWRT - INFO - Trying to access router web page at 192.168.31.1:
+2021-03-14 20:47:26,730 - AutoWRT - INFO - Detected Xiaomi Router Chinese Edition (possibly xiaomi_mi_router_4a_100m or xiaomi_mi_router_4a_gigabit?)
+2021-03-14 20:47:26,769 - AutoWRT - INFO - Starting router configuration
+2021-03-14 20:47:38,103 - AutoWRT - INFO - Router successfully set up!
+2021-03-14 20:47:55,404 - AutoWRT - INFO - Logged into Webinterface at http://192.168.31.1/cgi-bin/luci/;stok=00000000000000000000000000000000/web/home
+2021-03-14 20:47:55,618 - AutoWRT - INFO - Upload OpenWRTInvasion
+2021-03-14 20:47:57,023 - AutoWRT - INFO - Run OpenWRTInvasion
+2021-03-14 20:47:59,766 - AutoWRT - INFO - OpenWRTInvasion succeeded!
+2021-03-14 20:48:00,541 - AutoWRT - INFO - Router model detected as R4AC
+2021-03-14 20:48:00,577 - AutoWRT - INFO - Save some command outputs in directory "/home/me/autowrt/log/2021-03-14T20:47:21.003883"
+2021-03-14 20:48:00,577 - AutoWRT - INFO -  dmesg
+2021-03-14 20:48:00,985 - AutoWRT - INFO -  uname -a
+2021-03-14 20:48:01,067 - AutoWRT - INFO -  cat /proc/cpuinfo
+2021-03-14 20:48:01,130 - AutoWRT - INFO -  for i in /sys/class/mtd/mtd*/*;do echo "$i"; cat "$i" 2> /dev/null;done
+2021-03-14 20:48:06,423 - AutoWRT - INFO - Start backup of the mtd
+2021-03-14 20:48:06,471 - AutoWRT - INFO - Back up mtd0 to mtd0_ALL.backup size 01000000
+2021-03-14 20:48:34,685 - AutoWRT - INFO - Back up mtd1 to mtd1_Bootloader.backup size 00020000
+2021-03-14 20:48:34,833 - AutoWRT - INFO - Back up mtd2 to mtd2_Config.backup size 00010000
+2021-03-14 20:48:34,940 - AutoWRT - INFO - Back up mtd3 to mtd3_Factory.backup size 00010000
+2021-03-14 20:48:35,003 - AutoWRT - INFO - Back up mtd4 to mtd4_crash.backup size 00010000
+2021-03-14 20:48:35,080 - AutoWRT - INFO - Back up mtd5 to mtd5_cfg_bak.backup size 00010000
+2021-03-14 20:48:35,187 - AutoWRT - INFO - Back up mtd6 to mtd6_overlay.backup size 00100000
+2021-03-14 20:48:36,221 - AutoWRT - INFO - Back up mtd7 to mtd7_OS1.backup size 00c60000
+2021-03-14 20:48:49,174 - AutoWRT - INFO - Back up mtd8 to mtd8_rootfs.backup size 00b00000
+2021-03-14 20:48:59,555 - AutoWRT - INFO - Back up mtd9 to mtd9_disk.backup size 00240000
+2021-03-14 20:49:02,172 - AutoWRT - INFO - Verify mtd0_ALL.backup
+2021-03-14 20:49:13,030 - AutoWRT - WARNING - mtd0_ALL.backup failed the checksum verification against md5sum /dev/mtd0ro 'fd2d645fc41f209337cfd329d7c49498'/'6a4acebef96fe5d73a200c75d93dee71'
+2021-03-14 20:49:13,030 - AutoWRT - INFO - Verify mtd1_Bootloader.backup
+2021-03-14 20:49:13,118 - AutoWRT - INFO - Verify mtd2_Config.backup
+2021-03-14 20:49:13,206 - AutoWRT - INFO - Verify mtd3_Factory.backup
+2021-03-14 20:49:13,253 - AutoWRT - INFO - Verify mtd4_crash.backup
+2021-03-14 20:49:13,310 - AutoWRT - INFO - Verify mtd5_cfg_bak.backup
+2021-03-14 20:49:13,402 - AutoWRT - INFO - Verify mtd6_overlay.backup
+2021-03-14 20:49:14,062 - AutoWRT - INFO - Verify mtd7_OS1.backup
+2021-03-14 20:49:22,198 - AutoWRT - INFO - Verify mtd8_rootfs.backup
+2021-03-14 20:49:29,520 - AutoWRT - INFO - Verify mtd9_disk.backup
+2021-03-14 20:49:31,398 - AutoWRT - INFO - Backups are done, now upload OpenWRT-Image
+2021-03-14 20:49:31,399 - AutoWRT - INFO - Uploading image 'openwrt-19.07.7-ramips-mt76x8-xiaomi_mir4a-100m-squashfs-sysupgrade.bin'...
+2021-03-14 20:49:34,839 - AutoWRT - INFO - Verifying image 'openwrt-19.07.7-ramips-mt76x8-xiaomi_mir4a-100m-squashfs-sysupgrade.bin'...
+2021-03-14 20:49:35,203 - AutoWRT - INFO - Image verification succeeded
+2021-03-14 20:49:35,206 - AutoWRT - INFO - Installing OpenWRT NOW!..
+2021-03-14 20:49:35,206 - AutoWRT - INFO - nohup mtd -e OS1 -q write openwrt-19.07.7-ramips-mt76x8-xiaomi_mir4a-100m-squashfs-sysupgrade.bin OS1
+Unlocking OS1 ...
+Erasing OS1 ...
+
+Writing from openwrt-19.07.7-ramips-mt76x8-xiaomi_mir4a-100m-squashfs-sysupgrade.bin to OS1 ... 
+2021-03-14 20:50:38,886 - AutoWRT - INFO - OpenWRT-Installation was successful, rebooting device...
+```
+</details>
+
 ## Other Tools
 
 **Note: Recovery images may be in chinese language only**

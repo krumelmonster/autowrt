@@ -1,0 +1,8 @@
+/venv/bin/
+/venv/include/
+/venv/lib/
+/venv/lib64
+/images/*.bin
+/tools/*.bin
+/log
+/.idea

@@ -1,6 +1,6 @@
 ## Summary
 
-AutoWRT is planned to be a python application to excecute handsfree out-of-the-box installation of OpenWRT. It currently supports the Xiaomi 4A Gigabit and Xiaomi 4A 100m Routers via an [OpenWRTInvasion](https://github.com/acecilia/OpenWRTInvasion)-based exploit. Support for the Xiaomi 3Gv1 and Redmi RC2100 is planned to be implemented soon.
+AutoWRT is planned to be a python application to excecute handsfree out-of-the-box installation of OpenWRT. It requires no internet connection. It currently supports the Xiaomi 4A Gigabit and Xiaomi 4A 100m Routers via an [OpenWRTInvasion](https://github.com/acecilia/OpenWRTInvasion)-based exploit. Support for the Xiaomi 3Gv1 and Redmi RC2100 is planned to be implemented soon.
 
 This software is for educational purposes only. Excecute it on your own resposibility.
 
@@ -14,7 +14,7 @@ If you choose to install autowrt as a package, you will have to copy `config.py`
 
 Download the OpenWRT images to the images directory and edit the `config.py` file. The `config.py` shipped contains links to where you find releases of OpenWRT 19.07. If you choose other images, don't forget to update the sha256 checksums in `config.py` as well. If 'SKIP' is provided in the checksum field, the checksum test will not be performed.
 
-Once you're done with the configuration, connect a router in factory state via cable from its LAN port to your Computer, then run autowrt. autowrt will wait up to two minutes for a router that is still booting. Afterwards it will install your image according to configuration and reboot your device on success.
+Once you're done with the configuration, connect a router in factory state via cable from its LAN port to your Computer, then run autowrt. You don't have to connect the router to the internet. autowrt will wait up to two minutes for a router that is still booting. Afterwards it will install your image according to configuration and reboot your device on success.
 
 The OpenWRT image will not be modified, nor will OpenWRT be set up. Once AutoWRT has finished, you will have to set it up yourself (e.g. set passwords/install ssh-keys)
 

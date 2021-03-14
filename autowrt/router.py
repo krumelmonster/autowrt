@@ -45,6 +45,9 @@ class Router:
             self.logger.error("Log Path not configured!")
             exit(123)
 
+        self.logger.info("Logging to {logpath}".format(logpath=self.logpath))
+        self.logger.info("Data dir is {imagedir}".format(imagedir=self.config.imagedir))
+
     @property
     def seleniumdriver(self):
         from selenium import webdriver
@@ -298,7 +301,7 @@ class Xiaomi(Router):
         if not os.path.isfile(imagefile):
             self.logger.error('The image file could not be found at {} as configured in config.py'.format(imagefile))
             exit(123)
-        if model['checksum'] != 'IGNORE':
+        if model['checksum'] != 'IGNORE' || model['checksum'] != 'SKIP':
             hash_file = sha256sum(imagefile)
             if hash_file != model['checksum']:
                 self.logger.error(

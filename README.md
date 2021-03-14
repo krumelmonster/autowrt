@@ -20,7 +20,7 @@ The OpenWRT image will not be modified, nor will OpenWRT be set up. Once AutoWRT
 
 If enabled in `config.py`, AutoWRT will collect some information from the stock firmware as well as backups of all mtd sections to the log directory. You may want to delete those at some point.
 
-<details open="open">
+<details>
   <summary>Example output</summary>
   
 ```

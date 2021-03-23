@@ -85,6 +85,14 @@ This repository contains a script to debrick a xiaomi router in Linux. It assume
 
 To use it, download the firmware image for your device from [the manufacturer](http://www.miwifi.com/miwifi_download.html) and place it in the tools directory. For the 4a Gigabit edition, this could be `miwifi_r4a_firmware_72d65_2.28.62.bin` for example. use the `ip a` command to determine the name of your wired network interface, it should start with eth or enp. Then from the tools directory run the script e.g. `./unbrick.sh eth0 miwifi_r4a_firmware_72d65_2.28.62.bin`. Connect the LAN-Port of your device to your computer, hold the reset button, then power on the router. Hold the reset button until the LED of the router starts blinking orange after about 10 seconds. Then wait. After a few seconds, the script should output `dnsmasq-tftp: sent miwifi_r4a_firmware_72d65_2.28.62.bin to 192.168.1.81`. Keep waiting until the LED of the router turns blinking blue. Now you can unplug the router and it will be back to stock firmware.
 
+## Acknowledgments
+
+* Original vulnerabilities and exploit: [UltramanGaia](https://github.com/UltramanGaia/Xiaomi_Mi_WiFi_R3G_Vulnerability_POC)
+* OpenWRTInvasion: [acecilia](https://github.com/acecilia/OpenWRTInvasion/)
+* Instructions to install OpenWrt after exploit execution: [rogerpueyo](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/21)
+* Testing and detailed install instructions: [hey07](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-but-requires-overwriting-spi-flash-with-programmer/36685/349)
+* Checking the URL of pending updates: [sicklesareterrible](https://forum.openwrt.org/t/xiaomi-mi-router-4a-gigabit-edition-r4ag-r4a-gigabit-fully-supported-and-flashable-with-openwrtinvasion/36685/1114?u=acecilia)
+
 ## Disclaimer
 
 **THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**

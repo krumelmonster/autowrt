@@ -142,6 +142,10 @@ class Xiaomi(Router):
         if locale == 'en':
             click.click()
 
+            elem = driver.find_element_by_name("input")
+            elem.clear()
+            elem.send_keys(self.location)
+
             click = driver.find_element_by_xpath("//span[.='" + self.location + "']")
             assert click
             click.click()

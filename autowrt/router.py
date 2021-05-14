@@ -95,7 +95,7 @@ class Xiaomi(Router):
             driver.get("http://" + self.router_ip_address)
         except Exception:
             self.logger.debug("Failed attempt at loading router start page")
-        return driver.title == "Mi Router" or driver.title == '小米路由器'
+        return driver.title == "Mi Router" or driver.title == "MiWi-Fi Router" or driver.title == '小米路由器'
 
     def _load_webinterface(self):
         from selenium.webdriver.support.wait import WebDriverWait
@@ -137,22 +137,25 @@ class Xiaomi(Router):
         wait = WebDriverWait(driver, 30)
 
         # TODO: improve code quality
-        click = driver.find_element_by_link_text(t('Click to select>', '《用户许可使用协议》'))
+        try:
+            click = driver.find_element_by_link_text(t('Click to select>', '《用户许可使用协议》'))
 
-        if locale == 'en':
-            click.click()
+            if locale == 'en':
+                click.click()
 
-            elem = driver.find_element_by_name("input")
-            elem.clear()
-            elem.send_keys(self.location)
+                elem = driver.find_element_by_name("input")
+                elem.clear()
+                elem.send_keys(self.location)
 
-            click = driver.find_element_by_xpath("//span[.='" + self.location + "']")
-            assert click
-            click.click()
+                click = driver.find_element_by_xpath("//span[.='" + self.location + "']")
+                assert click
+                click.click()
 
-            click = driver.find_element_by_xpath("//button[.='Next']")
-            assert click
-            click.click()
+                click = driver.find_element_by_xpath("//button[.='Next']")
+                assert click
+                click.click()
+        except Exception:
+            driver.find_element_by_link_text('Start')
 
         check = driver.find_element_by_name("protocal")
         assert check
@@ -163,8 +166,20 @@ class Xiaomi(Router):
         assert click
         click.click()
 
-        click = wait.until(lambda driver: driver.find_element_by_link_text(
-            t("Continue setup without connecting a network cable", '不插网线，继续配置')))
+        def cont(driver):
+            try:
+                click=driver.find_element_by_link_text(
+                    t("Continue setup without connecting a network cable",
+                      '不插网线，继续配置'))
+                return click
+            except Exception:
+                try:
+                    click=driver.find_element_by_link_text('Continue Setting')
+                    return click
+                except Exception:
+                    return False
+
+        click = wait.until(cont)
         click.click()
 
         text = t('Static IP', '静态IP')
@@ -197,6 +212,7 @@ class Xiaomi(Router):
         elem.send_keys(self.password)
         elem.send_keys(Keys.RETURN)
 
+        # TODO: "Setup complete, router rebooting. " in other version :(
         WebDriverWait(driver, 120, 2).until(lambda driver: driver.find_element_by_xpath(
             "//p[.='" + t('Setup complete, Wi-Fi restarting', '配置完成，WiFi重启中') + "']"))
         self.logger.info("Router successfully set up!")
@@ -245,7 +261,11 @@ class Xiaomi(Router):
         try:
             click = driver.find_element_by_link_text(t('Click to select>', '《用户许可使用协议》'))
         except Exception:
-            self.logger.warning("Router already set up? Skipping setup")
+            try:
+                click = driver.find_element_by_link_text('Start')
+                self.locale = 'en'
+            except Exception:
+                self.logger.warning("Router already set up? Skipping setup")
         if (click):
             self._setup_router()
 

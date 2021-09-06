@@ -71,11 +71,11 @@ class Xiaomi(Router):
         self.password = self.config.password
         self.supported_models={
             'R4AC': {
-                'filename_re':'.*ramips-mt76x8-xiaomi_mir4a-100m-.*\\.bin',
+                'filename_re':'.*ramips-mt76x8-xiaomi_mi-?(r4a-100m|router-4a-100m)-.*\\.bin',
                 'flashcmd': 'mtd -e OS1 -q write {filename} OS1',
             },
             'R4A': {
-                'filename_re':'.*ramips-mt7621-xiaomi_mi(r3g-v2|router-4a-gigabit)-.*\\.bin',
+                'filename_re':'.*ramips-mt7621-xiaomi_mi-?(r3g-v2|router-4a-gigabit)-.*\\.bin',
                 'flashcmd': 'mtd -e OS1 -q write {filename} OS1',
             },
         }
@@ -342,7 +342,8 @@ class Xiaomi(Router):
                 ('uname -a', 'uname_-a'),
                 ('cat /proc/cpuinfo', 'cpuinfo'),
                 ('for i in /sys/class/mtd/mtd*/*;do echo "$i"; cat "$i" 2> /dev/null;done', 'class-mtd'),
-                #('nvram show', 'nvram')
+                ('ifconfig -a','ifconfig_-a'),
+                ('ip link','ip_link'),
             ]
 
             for command, filename in commands:
@@ -436,3 +437,6 @@ class Xiaomi(Router):
         self.logger.info("OpenWRT-Installation was successful, rebooting device...")
         cli.run('reboot')
         cli.result(delim)
+
+        if self.config.finished_callback != None:
+            self.config.finished_callback()

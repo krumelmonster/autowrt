@@ -19,3 +19,8 @@ class config:
             'checksum': '6b2cc16be173069adb50cc1dd6aa055482e35521ef789c83fae05759b4fa913c',
             },
         }
+
+    @staticmethod
+    def finished_callback():
+        import os
+        os.system('paplay /usr/share/sounds/freedesktop/stereo/phone-incoming-call.oga')

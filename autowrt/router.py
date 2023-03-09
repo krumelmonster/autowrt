@@ -72,11 +72,11 @@ class Xiaomi(Router):
         self.supported_models={
             'R4AC': {
                 'filename_re':'.*ramips-mt76x8-xiaomi_mi-?(r4a-100m|router-4a-100m)-.*\\.bin',
-                'flashcmd': 'mtd -e OS1 -q write {filename} OS1',
+                'flashcmd': 'mtd -r -e OS1 -q write {filename} OS1',
             },
             'R4A': {
                 'filename_re':'.*ramips-mt7621-xiaomi_mi-?(r3g-v2|router-4a-gigabit)-.*\\.bin',
-                'flashcmd': 'mtd -e OS1 -q write {filename} OS1',
+                'flashcmd': 'mtd -r -e OS1 -q write {filename} OS1',
             },
         }
 

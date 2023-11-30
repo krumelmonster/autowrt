@@ -7,6 +7,9 @@ import time
 
 from logging import Logger
 
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+
 from autowrt.openwrtinvasion import OpenWRTInvasion
 
 
@@ -138,43 +141,43 @@ class Xiaomi(Router):
 
         # TODO: improve code quality
         try:
-            click = driver.find_element_by_link_text(t('Click to select>', '《用户许可使用协议》'))
+            click = driver.find_element(By.LINK_TEXT, t('Click to select>', '《用户许可使用协议》'))
 
             if locale == 'en':
                 click.click()
 
-                elem = driver.find_element_by_name("input")
+                elem = driver.find_element(By.NAME, "input")
                 elem.clear()
                 elem.send_keys(self.location)
 
-                click = driver.find_element_by_xpath("//span[.='" + self.location + "']")
+                click = driver.find_element(By.XPATH, "//span[.='" + self.location + "']")
                 assert click
                 click.click()
 
-                click = driver.find_element_by_xpath("//button[.='Next']")
+                click = driver.find_element(By.XPATH, "//button[.='Next']")
                 assert click
                 click.click()
         except Exception:
-            driver.find_element_by_link_text('Start')
+            driver.find_element(By.LINK_TEXT, 'Start')
 
-        check = driver.find_element_by_name("protocal")
+        check = driver.find_element(By.NAME, "protocal")
         assert check
         if not check.is_selected():
             check.click()
 
-        click = driver.find_element_by_class_name("join")
+        click = driver.find_element(By.CLASS_NAME, "join")
         assert click
         click.click()
 
         def cont(driver):
             try:
-                click=driver.find_element_by_link_text(
+                click=driver.find_element(By.LINK_TEXT, 
                     t("Continue setup without connecting a network cable",
                       '不插网线，继续配置'))
                 return click
             except Exception:
                 try:
-                    click=driver.find_element_by_link_text('Continue Setting')
+                    click=driver.find_element(By.LINK_TEXT, 'Continue Setting')
                     return click
                 except Exception:
                     return False
@@ -184,36 +187,36 @@ class Xiaomi(Router):
 
         text = t('Static IP', '静态IP')
         try:
-            click = driver.find_element_by_xpath("//span[.='" + text + "']")
+            click = driver.find_element(By.XPATH, "//span[.='" + text + "']")
         except:
-            click = driver.find_element_by_xpath("//li[.='" + text + "']")
+            click = driver.find_element(By.XPATH, "//li[.='" + text + "']")
         click.click()
-        driver.find_element_by_class_name("button").click()
+        driver.find_element(By.CLASS_NAME, "button").click()
 
-        wait.until(lambda driver: driver.find_element_by_name("ip"))
-        elem = driver.find_element_by_name("ip")
+        wait.until(lambda driver: driver.find_element(By.NAME, "ip"))
+        elem = driver.find_element(By.NAME, "ip")
         elem.clear()
         elem.send_keys("192.168.32.2")
-        elem = driver.find_element_by_name("mask")
+        elem = driver.find_element(By.NAME, "mask")
         elem.clear()
         elem.send_keys("255.255.255.0")
-        elem = driver.find_element_by_name("gateway")
+        elem = driver.find_element(By.NAME, "gateway")
         elem.clear()
         elem.send_keys("192.168.32.1")
-        elem = driver.find_element_by_name("dns1")
+        elem = driver.find_element(By.NAME, "dns1")
         elem.clear()
         elem.send_keys("192.168.32.1")
-        driver.find_element_by_class_name("button").click()
+        driver.find_element(By.CLASS_NAME, "button").click()
 
-        # wait.until(lambda driver: driver.find_element_by_name("password"))
-        # elem = driver.find_element_by_name("password")
+        # wait.until(lambda driver: driver.find_element(By.NAME, "password"))
+        # elem = driver.find_element(By.NAME, "password")
         elem = wait.until(EC.element_to_be_clickable((By.NAME, "password")))
         elem.clear()
         elem.send_keys(self.password)
         elem.send_keys(Keys.RETURN)
 
         # TODO: "Setup complete, router rebooting. " in other version :(
-        WebDriverWait(driver, 120, 2).until(lambda driver: driver.find_element_by_xpath(
+        WebDriverWait(driver, 120, 2).until(lambda driver: driver.find_element(By.XPATH, 
             "//p[.='" + t('Setup complete, Wi-Fi restarting', '配置完成，WiFi重启中') + "']"))
         self.logger.info("Router successfully set up!")
         time.sleep(10)
@@ -259,12 +262,12 @@ class Xiaomi(Router):
 
         click = None
         try:
-            click = driver.find_element_by_link_text(t('Click to select>', '《用户许可使用协议》'))
-        except Exception:
+            click = driver.find_element(By.LINK_TEXT, t('Click to select>', '《用户许可使用协议》'))
+        except NoSuchElementException:
             try:
-                click = driver.find_element_by_link_text('Start')
+                click = driver.find_element(By.LINK_TEXT, 'Start')
                 self.locale = 'en'
-            except Exception:
+            except NoSuchElementException:
                 self.logger.warning("Router already set up? Skipping setup")
         if (click):
             self._setup_router()

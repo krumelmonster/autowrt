@@ -1,3 +1,5 @@
+# DON'T USE THIS SCRIPT: it fails to set a boot timeout, therefore if you brick your device, you can't even recover with UART pins soldered.
+
 ## Summary
 
 AutoWRT is planned to be a python application to excecute handsfree out-of-the-box installation of OpenWRT. It requires no internet connection. It currently supports the Xiaomi 4A Gigabit and Xiaomi 4A 100m Routers via an [OpenWRTInvasion](https://github.com/acecilia/OpenWRTInvasion)-based exploit. Support for the Xiaomi 3Gv1 and Redmi RC2100 is planned to be implemented soon.
